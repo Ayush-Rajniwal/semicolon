@@ -19,4 +19,4 @@ CAPTCHA
 ## captcha ideas
 * - [ ] ball in a circle
 * - [ ] audio superimposition
-* - [ ] wave construct
+* - [ ] consolidation
