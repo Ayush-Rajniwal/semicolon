@@ -1,10 +1,10 @@
-Our Repository name :-    semicolon
-Branches : -
-Our Repository name :-    semicolon
+Our Repository name :- semicolon
+
 Branches : -
 1.	master
 2.	UI
 3.	cap
+
 Command to create a new branch and switch to that branch as well :-
 $ git checkout -b branchName
 
