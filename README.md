@@ -19,5 +19,5 @@ CAPTCHA
 ## captcha ideas
 * - [ ] ball in a circle
 * - [ ] audio superimposition
-* - [ ] wave construct
 * - [ ] Reflection time
+* - [ ] consolidation
