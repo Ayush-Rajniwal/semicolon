@@ -20,3 +20,5 @@ CAPTCHA
 ## captcha ideas
 * - [ ] ball in a circle
 * - [ ] audio superimposition
+* - [ ] Reflection time
+* - [ ] consolidation
