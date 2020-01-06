@@ -22,3 +22,4 @@ CAPTCHA
 * - [ ] audio superimposition
 * - [ ] Reflection time
 * - [ ] consolidation
+* - [ ] qwerty
