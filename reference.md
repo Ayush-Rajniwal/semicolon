@@ -21,3 +21,11 @@
 
 ### Command to pull
 ```$ git pull```
+
+### Turning Https to http
+1. Install openssl from [here](https://sourceforge.net/projects/openssl/).
+2. Run below command in the folder where your server file is located (*app.js*)
+3. ``` openssl genrsa -out privkey.pem 1024 ```
+4. ```openssl req -new -key key.pem -out csr.pem```
+5. ```openssl x509 -req -days 9999 -in csr.pem -signkey key.pem -out cert.pem```
+
