@@ -45,7 +45,7 @@ function drawCustom(x,y,z) {
   ball.y=y;
   if(Circle.intersect(target, ball)){
     console.log("Intersect")
-   navigator.vibrate([500]);
+   navigator.vibrate(500);
   }
   ellipse(x,y,20,20);
   
