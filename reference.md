@@ -22,6 +22,12 @@
 ### Command to pull
 ```$ git pull```
 
+### Command to delete branch from repo
+```git push origin --delete branchName```
+
+### Command to delete branch from local system
+```git branch -d branchName```
+
 ### Turning Https to http
 1. Install openssl from [here](https://sourceforge.net/projects/openssl/).
 2. Run below command in the folder where your server file is located (*app.js*)
