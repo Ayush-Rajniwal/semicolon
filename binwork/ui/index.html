@@ -34,13 +34,13 @@
 <ul class="nav nav-pills flex-column bg-secondary" >
   
   <li class="nav-item">
-    <a class="nav-link text-body" data-toggle="pill" href="#aboutThisGuide">About this guide</a>
+    <a class="nav-link text-body active" data-toggle="pill" href="#aboutThisGuide">About this guide</a>
   </li>
   <li class="nav-item">
     <a class="nav-link text-body" data-toggle="pill" href="#overview">overview</a>
   </li>
   <li class="nav-item ">
-    <a class="nav-link text-body active" data-toggle="pill" href="#api">get API</a>
+    <a class="nav-link text-body" data-toggle="pill" href="#api">get API</a>
   </li>
   <li class="nav-item">
     <a class="nav-link text-body" data-toggle="pill" href="#requirements">Requirements for using captcha api</a>
@@ -63,10 +63,10 @@
 </ul>
 </div>
 
-<div class="col-sm-10">
+<div class="col-sm-10" id="screen">
 <div class="tab-content">
 
-  <div id="aboutThisGuide" class="container tab-pane fade"><br>
+  <div id="aboutThisGuide" class="container tab-pane active"><br>
     <h2> About this guide</h2>
     <h4>This guide describes the acuptcha.
       
@@ -85,7 +85,7 @@
   All the interfaces have the same functionality and use the same set of input parameters. <h4>
   </div>
   
-  <div id="api" class="container tab-pane active"><br>
+  <div id="api" class="container tab-pane"><br>
     <h3>API key(Fake)</h3><br>
     Domain name: <input type="text"><br><br>
     API key Name:<input type="text"> <br><br>
@@ -140,9 +140,12 @@
         
         $(document).ready(function (){ 
           var wid = $( document ).width();
-          console.log(wid);
-          if (wid > 600){
+          if (wid > 700){
               $("#menu").hide();
+          }
+          if(wid<700){
+            $("#sidebar").addClass("col-sm-3");
+            $("#screen").addClass("col-sm-9");
           }
       })
     });
