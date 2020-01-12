@@ -1,15 +1,19 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <script src="https://raw.githack.com/infusion/Circle.js/master/circle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.10.2/p5.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.10.2/addons/p5.sound.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="style.css">
-    
-    <meta charset="utf-8" />
-
+    <link rel="stylesheet" type="text/css" href="/stylesheets/style.css">
   </head>
   <body>
+    <script>
+      function vib(){
+        navigator.vibrate(1000);
+      }
+      </script>
+    <button id="abc" onclick="vib()">Vibrate Once</button>
     <script src="/javascripts/sketch.js"></script>
   </body>
 </html>

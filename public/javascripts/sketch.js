@@ -1,37 +1,57 @@
-let x,y,z,target,ball;
-function setup() {
-createCanvas(windowWidth, windowHeight);
-target = {x: random(50,windowWidth-50), y: random(50,windowHeight-50), r: 100};
-ellipse(target.x,target.y,target.r,target.r);
-ball = {x: windowWidth/2, y:windowHeight/2, r: 50};
+var x, y, z;
+var xpos, ypos;
+var speed = 5;
+
+function setup() 
+{
+    if ('vibrate' in navigator) {
+   // Shake that device!
+} else {
+   // Not supported
+}
+   
+  // set canvas size
+  createCanvas(windowWidth, windowHeight);
+  // default values
+  xpos = 200;
+  ypos = 200;
+  x = 0;
+  y = 0;
 }
 
+function draw() 
+{
+  // set background color to white
+  background(0);
 
-function draw() {
-  background(220);
-  ellipse(target.x,target.y,target.r,target.r);
-  text("x "+x,10,10);
-  text("y "+y,10,30);
-  text("z "+z,10,50);  
-  x= map(x,-10,10,windowWidth,0);
-  y= map(y,-10,10,0,windowHeight);
-  ellipse(x,y,ball.r,ball.r);
-  ball.x=x+target.x/2;
-  ball.y=y+target.y/2;
-  if(Circle.intersect(target, ball)){
-    console.log("Intersect")
-   navigator.vibrate([100]);
-  }
+  // add/subract xpos and ypos
+  xpos = xpos - speed*x;
+  ypos = ypos + speed*y;
+
+  // wrap ellipse if over bounds
+  if(xpos > windowWidth) { xpos = 0; }
+  if(xpos < 0) { xpos = windowWidth; }
+  if(ypos > windowHeight) { ypos = 0; }
+  if(ypos < 0) { ypos = windowHeight; }
+
+  // draw ellipse
+  fill(255, 0, 0);
+  ellipse(xpos, ypos, 25, 25);
+
+  // display variables
   
-  
+  fill(255);
+  noStroke();
+  text("x: " + x, 25, 25);
+  text("y: " + y, 25, 50);
+  text("z: " + z, 25, 75); 
 }
 
-window.ondevicemotion = function(event) {
-  
- x = event.accelerationIncludingGravity.x;  
- y = event.accelerationIncludingGravity.y;  
- z = event.accelerationIncludingGravity.z; 
-
-}
-
-
+// accelerometer Data
+window.addEventListener('devicemotion', function(e) 
+{
+  // get accelerometer values
+  x = parseInt(e.accelerationIncludingGravity.x);
+  y = parseInt(e.accelerationIncludingGravity.y);
+  z = parseInt(e.accelerationIncludingGravity.z); 
+});
