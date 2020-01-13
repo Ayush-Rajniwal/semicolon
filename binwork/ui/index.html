@@ -11,26 +11,39 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
   <style>
+    body {
+      background-color: aqua;
+    }
+
     #navbar {
       background-color: rgb(204, 104, 11);
+      
     }
+
+    body {
+      overflow-x: hidden;
+    }
+
+    #sidebar {
+      overflow: auto;
+    }
+
   </style>
 
 </head>
 <body>
-
-  <div class="d-flex position-sticky" id="navbar">
-    <div class="p-2 mr-auto" id="menu"><i class="fa fa-list"></i></div>
-    <a class="text-body ml-auto m-2" data-toggle="dropdown" href="#"><i class="fa fa-user-circle"></i></a>
-        <div class="dropdown-menu">
-        <a class="dropdown-item" href="#">Link 1</a>
-        <a class="dropdown-item" href="#">Link 2</a>
-        <a class="dropdown-item" href="#">Link 3</a>
-        </div>
+<div class="d-flex" id="navbar">
+  <div class="p-2" id="menu"><i class="fa fa-list"></i></div>
+  <a class="text-body ml-auto m-2" data-toggle="dropdown" href="#"><i class="fa fa-user-circle"></i></a>
+    <div class="dropdown-menu">
+    <a class="dropdown-item" href="#">Link 1</a>
+    <a class="dropdown-item" href="#">Link 2</a>
+    <a class="dropdown-item" href="#">Link 3</a>
+    </div>
 </div>
 
 <div class="row">
-<div class="col-sm-2" id="sidebar" style="position: sticky">
+<div class="col-sm-3" id="sidebar" >
 <ul class="nav nav-pills flex-column bg-secondary" >
   
   <li class="nav-item">
@@ -63,7 +76,7 @@
 </ul>
 </div>
 
-<div class="col-sm-10" id="screen">
+<div class="col-9" id="screen" style="padding-right: 0px;">
 <div class="tab-content">
 
   <div id="aboutThisGuide" class="container tab-pane active"><br>
@@ -112,7 +125,7 @@
     Naman Crist Vats : Tu aa ja tabhi report banegi. #2ghantebaad <br><br>
     Tushar Tyagi : Go Ahead bro. #UIpartner <br><br>
     Anurag Sharma : Hardworking. #FALTU_BOL_RAHA_ANURAG<br><br>
-    Ritika Chauhan : No report yet. #okey_okey</h4>
+    Ritika Chauhan : Opposite of Akansha. #ExtraOridinary_Performance #Last_vala_jisne_likha_usne_sucide_kar_li</h4>
   </div>
   <div id="CAPTCHA" class="container tab-pane fade"><br>
     <h2>HERE PILLS WILL BE ADDED FOR DIFFERENT CAPTCHA MODULES<br></h2>
@@ -126,29 +139,39 @@
 </div>
 </div>
 
+
 </body>
 
 <script src="" type="text/javascript"></script>
 <script>
 
-    $(document).ready(function (){ 
-
-        $("#menu").click(function(){ 
-
-          $("#sidebar").toggle();
-        });
-        
-        $(document).ready(function (){ 
-          var wid = $( document ).width();
-          if (wid > 700){
-              $("#menu").hide();
+  $(document).ready(function (){ 
+    $("#menu").click(function(){ 
+      $("#sidebar").toggle(); // To hide and show sidebar in phone.
+      });
+      
+      if (/firefox/.test(navigator.userAgent.toLowerCase())) {
+        console.log("Firefox");
+     } else {
+        console.log("Other than Firefox");
+        if(wid<750){
+          $("#sidebar").addClass("ml-3"); //For rotate screen
+          $("#screen").addClass("ml-3");
+          $("#navbar").addClass("ml-3");
+          console.log("hello");
           }
-          if(wid<700){
-            $("#sidebar").addClass("col-sm-3");
-            $("#screen").addClass("col-sm-9");
-          }
-      })
-    });
+     }
+      
+      var wid = $( document ).width();
+        if (wid > 750){
+          $("#menu").hide(); //So that, menu button will only appear for small screen
+        }
+        if(wid<750){
+        $("#sidebar").addClass("col-sm-3"); //For rotate screen
+        $("#screen").addClass("col-sm-9");
+        console.log("hello");
+        }
+      });
 
 </script>
 
