@@ -16,15 +16,32 @@
 
 <body>
 
-  <div class="d-flex position-sticky" id="navbar">
-    <div class="p-2 mr-auto" id="menu"><i class="fa fa-list"></i></div>
-    <a class="text-body ml-auto m-2" data-toggle="dropdown" href="#"><i class="fa fa-user-circle"></i></a>
-        <div class="dropdown-menu">
-        <a class="dropdown-item" href="#">Link 1</a>
-        <a class="dropdown-item" href="#">Link 2</a>
-        <a class="dropdown-item" href="#">Link 3</a>
-        </div>
-</div>
+ <nav class="navbar navbar-expand-lg bg-" id="navbar">
+  <div class="container-fluid">
+    <a class="navbar-brand text-muted" href="#">SEMICOLON.com</a>
+    <button class="navbar-toggler " type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fa fa-user"></i>
+        </a>
+          <!-- Here's the magic. Add the .animate and .slide-in classes to your .dropdown-menu and you're all set! -->
+          <div class="dropdown-menu dropdown-menu-right animate slideIn" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="#">Login</a>
+            <a class="dropdown-item" href="#">Settings</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#">Sign Out</a>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
 
 <div class="row">
 <div class="col-sm-2" id="sidebar" style="position: sticky">
