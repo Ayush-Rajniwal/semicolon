@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <title>Homepage</title>
+<head>  
+<title>Homepage</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
@@ -9,24 +9,11 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/index.css">
 
-  <style>
-    #navbar {
-      background-color: rgb(204, 104, 11);
-      
-    }
-
-    body {
-      overflow-x: hidden;
-    }
-
-    #sidebar {
-      overflow: auto;
-    }
-
-  </style>
 
 </head>
+
 <body>
 <div class="d-flex" id="navbar">
   <div class="p-2" id="menu"><i class="fa fa-list"></i></div>
@@ -56,7 +43,7 @@
   </li>
   <li class="nav-item">
     <a class="nav-link text-body" data-toggle="pill" href="#doc">Documentation</a>
-  </li>
+  </li> 
   <li class="nav-item">
     <a class="nav-link text-body" data-toggle="pill" href="#profile">Profile Report</a>
   </li>
@@ -75,7 +62,7 @@
 <div class="col-9" id="screen" style="padding-right: 0px;">
 <div class="tab-content">
 
-  <div id="aboutThisGuide" class="container tab-pane active"><br>
+  <div id="aboutThisGuide" class="container tab-pane fade"><br>
     <h2> About this guide</h2>
     <h4>This guide describes the acuptcha.
       
@@ -94,7 +81,7 @@
   All the interfaces have the same functionality and use the same set of input parameters. <h4>
   </div>
   
-  <div id="api" class="container tab-pane"><br>
+  <div id="api" class="container tab-pane active"><br>
     <h3>API key(Fake)</h3><br>
     Domain name: <input type="text"><br><br>
     API key Name:<input type="text"> <br><br>
@@ -134,42 +121,9 @@
    </div>
 </div>
 </div>
-
-
+<button onclick="topFunction()" id="myBtn" title="Go to top"><i class="fa fa-angle-double-up"></i></button>
 </body>
 
-<script src="" type="text/javascript"></script>
-<script>
-
-  $(document).ready(function (){ 
-    $("#menu").click(function(){ 
-      $("#sidebar").toggle(); // To hide and show sidebar in phone.
-      });
-      
-      if (/firefox/.test(navigator.userAgent.toLowerCase())) {
-        console.log("Firefox");
-     } else {
-        console.log("Other than Firefox");
-        if(wid<750){
-          $("#sidebar").addClass("ml-3"); //For rotate screen
-          $("#screen").addClass("ml-3");
-          $("#navbar").addClass("ml-3");
-          console.log("hello");
-          }
-     }
-      
-      var wid = $( document ).width();
-        if (wid > 750){
-          $("#menu").hide(); //So that, menu button will only appear for small screen
-        }
-        if(wid<750){
-        $("#sidebar").addClass("col-sm-3"); //For rotate screen
-        $("#screen").addClass("col-sm-9");
-        console.log("hello");
-        }
-      });
-
-</script>
-
+<script src="js/index.js" type="text/javascript"></script>
 
 </html>
