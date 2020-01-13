@@ -1,20 +1,31 @@
+$(document).ready(function (){ 
 
+  $("#menu").click(function(){ 
 
-
-    $(document).ready(function (){ 
-
-        $("#menu").click(function(){ 
-
-          $("#sidebar").toggle();
-        });
+    $("#sidebar").toggle();
+  });
         
-        $(document).ready(function (){ 
-          var wid = $( document ).width();
-          console.log(wid);
-          if (wid > 600){
-              $("#menu").hide();
-          }
-      })
+    if (/firefox/.test(navigator.userAgent.toLowerCase())) {
+      console.log("Firefox");
+      } else {
+        console.log("Other than Firefox");
+        if(wid<750){
+        $("#sidebar").addClass("ml-3"); //For rotate screen
+        $("#screen").addClass("ml-3");
+        $("#navbar").addClass("ml-3");
+      console.log("hello");
+      }
+    }
+        
+      var wid = $( document ).width();
+        if (wid > 750){
+        $("#menu").hide(); //So that, menu button will only appear for small screen
+        }
+        if(wid<750){
+        $("#sidebar").addClass("col-sm-3"); //For rotate screen
+        $("#screen").addClass("col-sm-9");
+        console.log("hello");
+        }
     });
 
   //Get the button
