@@ -14,6 +14,7 @@ CAPTCHA
 ## Ideas
 1. API can be generate using user email and timestamp.(use encryption)
 2. Take user domain from where the requests are going to generate.
+3. IP address monitoring
 
 
 ## captcha ideas
@@ -21,3 +22,4 @@ CAPTCHA
 * - [ ] audio superimposition
 * - [ ] Reflection time
 * - [ ] consolidation
+* - [ ] qwerty
