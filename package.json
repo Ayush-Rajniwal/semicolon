@@ -13,6 +13,7 @@
     "http-errors": "~1.6.3",
     "mongoose": "^5.8.7",
     "morgan": "~1.9.1",
-    "nodemon": "^2.0.2"
+    "nodemon": "^2.0.2",
+    "socket.io": "^2.3.0"
   }
 }

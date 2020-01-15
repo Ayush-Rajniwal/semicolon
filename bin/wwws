@@ -103,6 +103,15 @@ app.set("port",https_port);
 server = https.createServer(options, app).listen(https_port, function () {
   console.log('Magic happens on port ' + https_port); 
  });
+
  
+ /**
+ * Socket.io
+ */
+var socketApi = require('../socketApi');
+var io = socketApi.io;
+io.attach(server);
+
+
 server.on('error', onError);
 server.on('listening', onListening);
