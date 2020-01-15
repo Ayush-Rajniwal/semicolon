@@ -1,15 +1,10 @@
 var x, y, z;
 var xpos, ypos;
 var speed = 5;
-
+var socket = io("https://192.168.43.173:3000");
 function setup() 
-{
-    if ('vibrate' in navigator) {
-   // Shake that device!
-} else {
-   // Not supported
-}
-   
+{   
+ 
   // set canvas size
   createCanvas(windowWidth, windowHeight);
   // default values
@@ -37,6 +32,8 @@ function draw()
   // draw ellipse
   fill(255, 0, 0);
   ellipse(xpos, ypos, 25, 25);
+  console.log(xpos+" # "+ypos);
+  socket.emit('move',{x:xpos,y:ypos});
 
   // display variables
   
@@ -55,3 +52,9 @@ window.addEventListener('devicemotion', function(e)
   y = parseInt(e.accelerationIncludingGravity.y);
   z = parseInt(e.accelerationIncludingGravity.z); 
 });
+
+
+//automatically resize canvas when screen size changess
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
+}
