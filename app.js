@@ -4,8 +4,17 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+const mongoose = require('mongoose');
+const dbName = "MyDb";
+
 var indexRouter = require('./routes/index');
 var apiRouter = require('./routes/api');
+
+mongoose.connect('"mongodb://localhost:27017/'+dbName, { useNewUrlParser: true, useUnifiedTopology: true },(err,db)=>{
+db.collection('test').insertOne({name:"Ayush",pass:"1234yasgd"}).then(()=>{
+  console.log("Inserted Successfully")
+})
+})
 
 var app = express();
 
