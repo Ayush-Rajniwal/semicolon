@@ -12,8 +12,17 @@ html, body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;  
 }
-canvas {
-  display: block;
+#defaultCanvas0 {
+  display: none;
+  margin:0;
+  padding: 0;
+}
+
+#Captcha{
+  position: absolute;
+  top:0;
+  left:0;
+  z-index: 9999;
 }
 
 

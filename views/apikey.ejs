@@ -73,10 +73,12 @@
                      </tr>
                     </thead>
                     <tbody>
+                      <%for(var i=0;i<data.dokey.length;i++){%>
                       <tr>
-                        <td>John</td>
-                        <td>dcsf-fbas-31ba-sbs2</td>
+                        <td><%=data.dokey[i][0]%></td>
+                        <td><%=data.dokey[i][1]%></td>
                       </tr>
+                      <%}%>
                     </tbody>
                   </table>
               </div>

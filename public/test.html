@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Testing Traptcha</title>
+
+    <link rel="stylesheet" type="text/css" href="/css/style.css" />
+
+    <!-- jquery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <!-- p5js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.10.2/p5.js"></script>
+
+    <!-- socket io (Part of client code)-->
+    <script src="/socket.io/socket.io.js"></script>
+  </head>
+  <body>
+    <div class="login-page">
+      <div class="form">
+        <form class="login-form">
+          <input type="email" placeholder="email" />
+          <input type="password" placeholder="password" />
+          <button id="vcp" style="margin-bottom: 10px;">Verify Captcha</button>
+          <button>login</button>
+        </form>
+      </div>
+    </div>
+    <div id="Captcha"></div>
+
+    <!-- Client side code  -->
+    <script>
+      $(document).ready(() => {
+        $("#vcp").click(e => {
+          e.preventDefault();
+
+          function getScrollBarWidth() {
+            var $outer = $("<div>")
+                .css({
+                  visibility: "hidden",
+                  width: 100,
+                  overflow: "scroll"
+                })
+                .appendTo("body"),
+              widthWithScroll = $("<div>")
+                .css({ width: "100%" })
+                .appendTo($outer)
+                .outerWidth();
+            $outer.remove();
+            return 100 - widthWithScroll;
+          }
+
+          let imgData;
+          let payload = {
+            w: document.body.clientWidth - getScrollBarWidth(),
+            h: document.body.clientHeight
+          };
+
+          console.log(payload);
+          $.post("https://192.168.43.173:3000/api/cct", payload).then(msg => {
+            console.log(msg);
+            let myp5 = new p5(sketch => {
+              var socket = io("https://192.168.43.173:3000");
+
+              socket.on('vib',()=>{
+                console.log("Vibrate");
+                navigator.vibrate(90)
+              })
+              var x = 1,
+                y = 1,
+                z;
+              var xpos = msg.ball[0],
+                ypos = msg.ball[1];
+              var speed = 2;
+              var img;
+
+              sketch.setup = () => {
+                var raw = new Image();
+                raw.src = msg.bg;
+                let s = sketch.createCanvas(
+                  document.body.clientWidth - getScrollBarWidth(),
+                  document.body.clientHeight
+                );
+                sketch.background(255);
+                s.parent("Captcha");
+                raw.onload = function() {
+                  img = sketch.createImage(
+                    document.body.clientWidth,
+                    document.body.clientHeight
+                  );
+                  img.drawingContext.drawImage(raw, 0, 0);
+                  sketch.image(img, 0, 0); // draw the image, etc here
+                };
+              };
+
+              sketch.draw = () => {
+                if (msg.isMobile) {
+                  sketch.background(255);
+                  sketch.image(img, 0, 0);
+                  // add/subract xpos and ypos
+                  xpos = xpos - speed * x;
+                  ypos = ypos + speed * y;
+
+                  // wrap ellipse if over bounds
+                  if (xpos > sketch.windowWidth) {
+                    xpos = sketch.windowWidth;
+                  }
+                  if (xpos < 0) {
+                    xpos = 0;
+                  }
+                  if (ypos > sketch.windowHeight) {
+                    ypos = sketch.windowHeight;
+                  }
+                  if (ypos < 0) {
+                    ypos = 0;
+                  }
+                  sketch.text("x: "+xpos,10,30);
+                  sketch.text("y: "+ypos,10,60);
+                  
+                  sketch.ellipse(xpos, ypos, msg.ball[2], msg.ball[2]);
+                
+                }
+              };
+              setInterval( ()=>{
+                socket.emit("move", { x: xpos, y: ypos,r:msg.ball[2],metaData:msg.metaData})
+
+              } ,100)
+
+              window.addEventListener("devicemotion", function(e) {
+                // get accelerometer values
+                x = parseInt(e.accelerationIncludingGravity.x);
+                y = parseInt(e.accelerationIncludingGravity.y);
+                z = parseInt(e.accelerationIncludingGravity.z);
+               
+              });
+            });
+            $("#defaultCanvas0").show();
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

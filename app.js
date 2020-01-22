@@ -3,20 +3,19 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var useragent = require('express-useragent');
 
-const mongoose = require('mongoose');
-const dbName = "MyDb";
+
+const { createCanvas, loadImage } = require('canvas')
+const canvas = createCanvas(200, 200)
+const ctx = canvas.getContext('2d')
 
 var indexRouter = require('./routes/index');
 var apiRouter = require('./routes/api');
 
-mongoose.connect('"mongodb://localhost:27017/'+dbName, { useNewUrlParser: true, useUnifiedTopology: true },(err,db)=>{
-db.collection('test').insertOne({name:"Ayush",pass:"1234yasgd"}).then(()=>{
-  console.log("Inserted Successfully")
-})
-})
-
 var app = express();
+
+app.use(useragent.express());
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
