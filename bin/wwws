@@ -108,7 +108,7 @@ server = https.createServer(options, app).listen(https_port, function () {
  /**
  * Socket.io
  */
-var socketApi = require('../socketApi');
+var socketApi = require('../socketApi-dataColle');
 var io = socketApi.io;
 io.attach(server);
 

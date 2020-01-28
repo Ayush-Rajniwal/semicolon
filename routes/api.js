@@ -48,7 +48,7 @@ router.post('/apikeygen', function(req, res, next) {
 
 
 /* POST api/cct 
-cct - creare client token
+cct - create client token
 */
 router.post('/cct', function(req, res, next) {
 console.log(req.body.h)

@@ -59,10 +59,10 @@
           };
 
           console.log(payload);
-          $.post("https://192.168.43.173:3000/api/cct", payload).then(msg => {
+          $.post("/api/cct", payload).then(msg => {
             console.log(msg);
             let myp5 = new p5(sketch => {
-              var socket = io("https://192.168.43.173:3000");
+              var socket = io(window.location.href.split('/').slice(0, 3).join('/') );
 
               socket.on('vib',()=>{
                 console.log("Vibrate");
@@ -123,10 +123,21 @@
                 
                 }
               };
+              let devData={
+                id:'',
+                xy : [],
+                metaData:msg.metaData
+              }
               setInterval( ()=>{
+                devData.id= socket.id;
+                devData.xy.push([parseInt(xpos),parseInt(ypos)]);
                 socket.emit("move", { x: xpos, y: ypos,r:msg.ball[2],metaData:msg.metaData})
+              } ,250);
 
-              } ,100)
+              setTimeout(()=>{
+                console.log("Calling save")
+                socket.emit('save',devData);
+              },10000)
 
               window.addEventListener("devicemotion", function(e) {
                 // get accelerometer values
