@@ -58,7 +58,7 @@ let w=parseInt(req.body.w);
 const canvas = createCanvas(w,h)
 const ctx = canvas.getContext('2d');
 
-ctx.strokeStyle = 'rgba(0,0,0,0.5)';
+ctx.strokeStyle = 'rgba(0,0,0,0)';
 
 if(req.useragent.isMobile){
   let target={
@@ -66,12 +66,14 @@ if(req.useragent.isMobile){
     y:Random(40,h-40),
   }
   console.log('Mobile request');
+  ctx.fillStyle='#05dfd7';
   ctx.beginPath();
   ctx.arc(target.x,target.y, 40, 0, 2 * Math.PI);
   ctx.stroke(); 
+  ctx.fill();
   res.send({
     isMobile:true,
-    ball:[Random(0,w),Random(0,h),Random(10,20)],
+    ball:[Random(0,w),Random(0,h),Random(25,30)],
     bg:canvas.toDataURL(),
     metaData:cryptr.encrypt(target.x+'#'+target.y)
   });
@@ -79,6 +81,7 @@ if(req.useragent.isMobile){
 
 else{
 
+console.log('Desktop request');
 
 
 //horizontal
@@ -138,11 +141,29 @@ ctx.fill();
 }
 
 console.log(canvas.toDataURL())
-res.send({msg:canvas.toDataURL()})
+res.send({
+  isMobile:false,
+  msg:canvas.toDataURL()})
 }
 });
 
 
+/* POST api/getScore 
+cct - create client token
+*/
+router.post('/getScore', function(req, res, next) {
+  client.connect((err,db)=>{
+    var collection = db.db("test").collection('temp');
+    collection.findOne({id:req.body.Cuid})
+    .then((result)=>{
+      if(result)
+      res.send({result:"Pass"})
+      else
+      res.send({result:"Fail"})
+    })
+  })
+
+})
 
 function Random(min, max) {
   return Math.random() * (max - min) + min;

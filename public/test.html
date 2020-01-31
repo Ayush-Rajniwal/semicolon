@@ -16,6 +16,12 @@
 
     <!-- socket io (Part of client code)-->
     <script src="/socket.io/socket.io.js"></script>
+
+    <!-- jQuery Modal -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+
+    
   </head>
   <body>
     <div class="login-page">
@@ -30,9 +36,23 @@
     </div>
     <div id="Captcha"></div>
 
+
     <!-- Client side code  -->
     <script>
+       $("#voice").click(e => {
+         alert("yo")
+        var utterance = new SpeechSynthesisUtterance('Hello, Ma Mukesh bol rahe hu...kase ho tum abhay')
+utterance.pitch = 0.1
+utterance.volume = 1
+utterance.rate = 1
+utterance.lang='hi-IN'
+speechSynthesis.speak(utterance)
+
+    })
+
       $(document).ready(() => {
+
+
         $("#vcp").click(e => {
           e.preventDefault();
 
@@ -63,10 +83,24 @@
             console.log(msg);
             let myp5 = new p5(sketch => {
               var socket = io(window.location.href.split('/').slice(0, 3).join('/') );
-
+             
+              //socket's world begin here!!
+              socket.on('connect',()=>{
+                localStorage.setItem('Cuid',socket.id)
+              })
               socket.on('vib',()=>{
                 console.log("Vibrate");
                 navigator.vibrate(90)
+              })
+
+              socket.on('valid',()=>{
+              $("#vcp" ).text("CAPTCHA Pass😃");
+              $("#defaultCanvas0").remove();
+              })
+
+              socket.on('fail',()=>{
+                $("#vcp" ).text("CAPTCHA Fail😓");
+                $("#defaultCanvas0").remove();
               })
               var x = 1,
                 y = 1,
@@ -76,14 +110,22 @@
               var speed = 2;
               var img;
 
+
+
               sketch.setup = () => {
+
+                
+                // spkBtn = sketch.createButton('🗣');
+                // spkBtn.sketch.position(0, 0);
                 var raw = new Image();
                 raw.src = msg.bg;
                 let s = sketch.createCanvas(
                   document.body.clientWidth - getScrollBarWidth(),
                   document.body.clientHeight
                 );
-                sketch.background(255);
+                sketch.background('#f1c6d3');
+  
+        
                 s.parent("Captcha");
                 raw.onload = function() {
                   img = sketch.createImage(
@@ -92,13 +134,21 @@
                   );
                   img.drawingContext.drawImage(raw, 0, 0);
                   sketch.image(img, 0, 0); // draw the image, etc here
+
+                  sketch.noLoop();
                 };
+
+      
               };
 
+              let vBtn;              
+              let instructionFlag=0;
               sketch.draw = () => {
                 if (msg.isMobile) {
-                  sketch.background(255);
+
+                  sketch.background('#eae9e9');
                   sketch.image(img, 0, 0);
+
                   // add/subract xpos and ypos
                   xpos = xpos - speed * x;
                   ypos = ypos + speed * y;
@@ -116,34 +166,84 @@
                   if (ypos < 0) {
                     ypos = 0;
                   }
-                  sketch.text("x: "+xpos,10,30);
-                  sketch.text("y: "+ypos,10,60);
-                  
+                  // sketch.text("x: "+xpos,10,30);
+                  // sketch.text("y: "+ypos,10,60);
+
+                  sketch.textSize(16);
+                  sketch.fill('#ec7373');
+                  sketch.noStroke();
                   sketch.ellipse(xpos, ypos, msg.ball[2], msg.ball[2]);
-                
+                  if(instructionFlag==0){
+                  instructionFlag=1;
+                  sketch.fill('#000000');
+                  sketch.textFont('Comic Sans MS');
+                  sketch.textSize(16);
+                  sketch.text('Instruction:-\nTilt your phone to move the ball into the circle', 10, 30);
+                  sketch.textAlign(sketch.CENTER);
+                  sketch.text('Tap to Start', sketch.width/2, sketch.height/2);
+                  vBtn = sketch.createButton("🔊").position(sketch.width-40,0).addClass('example_a');
+                  vBtn.mousePressed(vmsg);
+                  vBtn.id('voice');
+                  function vmsg(){
+                    var utterance = new SpeechSynthesisUtterance('Tilt your phone to move the ball into the circle.')
+                    utterance.pitch = 1
+                    utterance.volume = 1
+                    utterance.rate = 1
+                    utterance.lang='hi-IN'
+                    speechSynthesis.speak(utterance)
+                  }
+
+
+                  sel = sketch.createSelect().addClass('top');;
+                  sel.position(sketch.width-100, 0);
+                  sel.option('pear');
+                  sel.option('kiwi');
+                  sel.option('grape');
+                  console.log(sel);
+                  
+                  }
                 }
               };
               let devData={
                 id:'',
                 xy : [],
+                acc:[],
                 metaData:msg.metaData
               }
-              setInterval( ()=>{
+              let flag=true;
+               sketch.mousePressed = (a) => {
+                 console.log(a.target.id)
+                if(a.target.id==='voice'){
+                  return;
+                }
+                 if(flag){
+                   flag=false;
+                   sketch.loop();
+                   runBro();}
+              }
+
+
+              function runBro(){
+              window.x =setInterval( ()=>{
                 devData.id= socket.id;
                 devData.xy.push([parseInt(xpos),parseInt(ypos)]);
                 socket.emit("move", { x: xpos, y: ypos,r:msg.ball[2],metaData:msg.metaData})
               } ,250);
 
               setTimeout(()=>{
-                console.log("Calling save")
+                sketch.noLoop();
+                vBtn.remove();
                 socket.emit('save',devData);
+                console.log("Calling save");
               },10000)
+            }
+
 
               window.addEventListener("devicemotion", function(e) {
                 // get accelerometer values
                 x = parseInt(e.accelerationIncludingGravity.x);
                 y = parseInt(e.accelerationIncludingGravity.y);
-                z = parseInt(e.accelerationIncludingGravity.z);
+                devData.acc.push([ parseInt(x), parseInt(y)])
                
               });
             });
