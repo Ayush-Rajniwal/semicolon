@@ -39,16 +39,16 @@
 
     <!-- Client side code  -->
     <script>
-       $("#voice").click(e => {
-         alert("yo")
-        var utterance = new SpeechSynthesisUtterance('Hello, Ma Mukesh bol rahe hu...kase ho tum abhay')
-utterance.pitch = 0.1
-utterance.volume = 1
-utterance.rate = 1
-utterance.lang='hi-IN'
-speechSynthesis.speak(utterance)
+//        $("#voice").click(e => {
+//          alert("yo")
+//         var utterance = new SpeechSynthesisUtterance('Hello, Ma Mukesh bol rahe hu...kase ho tum abhay')
+// utterance.pitch = 0.1
+// utterance.volume = 1
+// utterance.rate = 1
+// utterance.lang='hi-IN'
+// speechSynthesis.speak(utterance)
 
-    })
+//     })
 
       $(document).ready(() => {
 
@@ -134,7 +134,6 @@ speechSynthesis.speak(utterance)
                   );
                   img.drawingContext.drawImage(raw, 0, 0);
                   sketch.image(img, 0, 0); // draw the image, etc here
-
                   sketch.noLoop();
                 };
 
